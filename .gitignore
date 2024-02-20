@@ -3,3 +3,9 @@
 
 # For now, don't push all of glew
 /lib/glew/
+
+# Ignore .vscode settings
+/.vscode/
+
+# Ignore .vs settings
+/.vs/
