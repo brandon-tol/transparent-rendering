@@ -1,0 +1,5 @@
+# Ignore all build files
+/build/
+
+# For now, don't push all of glew
+/lib/glew/
