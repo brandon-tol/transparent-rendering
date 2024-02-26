@@ -2,6 +2,7 @@
 /build/
 
 # For now, don't push all of glew
+# since it should probably be a submodule (though their git doesn't seem to be updated)
 /lib/glew/
 
 # Ignore .vscode settings
