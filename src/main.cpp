@@ -24,7 +24,7 @@
 
 #define BTOLEDA_FILE_PATH(x) FILE_ROOT x
 
-int main()
+int main(int argc, char** argv)
 {
     using namespace btoleda;
 
@@ -37,12 +37,11 @@ int main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-    auto window = glfwCreateWindow(BTOLEDA_WIDTH, BTOLEDA_HEIGHT, "LearnOpenGL", nullptr, nullptr);
+    auto window = glfwCreateWindow(BTOLEDA_WIDTH, BTOLEDA_HEIGHT, "Depth Peeling", nullptr, nullptr);
 
     if (!window)
     {
@@ -110,7 +109,6 @@ int main()
     {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // program.use();
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 
