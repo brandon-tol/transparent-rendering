@@ -15,11 +15,14 @@ add_compile_definitions(FILE_ROOT="${PROJECT_SOURCE_DIR}/")
 add_subdirectory(lib/glfw)
 add_subdirectory(lib/glew/build/cmake)
 add_subdirectory(lib/glm)
+add_subdirectory(lib/assimp)
 
 # Add your source files here
 file (GLOB SOURCES
     src/*.cpp
     src/*.h
+    external/*.cpp
+    external/*.h
 )
 
 # Add any additional libraries or dependencies here
@@ -28,13 +31,14 @@ set(LIBRARIES
     glfw
     glew_s
     glm
+    assimp
 )
 
 # Create the executable
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Add the include directories
-target_include_directories(${PROJECT_NAME} PRIVATE src ${LIBRARIES} lib/glew/include/)
+target_include_directories(${PROJECT_NAME} PRIVATE src external ${LIBRARIES} lib/glew/include/)
 
 # Link the libraries
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})

@@ -14,6 +14,7 @@ namespace btoleda
         shader_program(const std::string& vertex_shader_filename, const std::string& fragment_shader_filename);
         ~shader_program() = default;
         void use() const;
+        inline GLuint program_id() const { return _m_program_id; }
 
         private:
         GLuint _compile(const std::string& vertex_shader, const std::string& fragment_shader) const;

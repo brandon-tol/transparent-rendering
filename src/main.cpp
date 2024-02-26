@@ -1,13 +1,19 @@
-#define GLEW_STATIC 1
+
 
 #define BTOLEDA_WIDTH 800
 #define BTOLEDA_HEIGHT 600
 
+#define GLEW_STATIC 1
 #include <GL/glew.h>
+
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
+
 #include <shader_program.h>
+#include <mesh.h>
 
 #include <iostream>
 #include <memory>
@@ -75,42 +81,23 @@ int main(int argc, char** argv)
 
     GLuint VAO, VBO, EBO;
 
-    float vertices[] = {
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.0f, 0.5f, 0.0f
+    std::vector<vertex> vertices {
+        { glm::vec3{-0.5f, -0.5f, 0.0f}, glm::vec3{ 0.0f, 0.0f, 1.0f }, glm::vec2{ -0.5f, -0.5f } },
+		{ glm::vec3{0.5f, -0.5f, 0.0f}, glm::vec3{ 0.0f, 0.0f, 1.0f }, glm::vec2{ 0.5f, -0.5f }  },
+        { glm::vec3{0.0f, 0.5f, 0.0f}, glm::vec3{ 0.0f, 0.0f, 1.0f }, glm::vec2{ 0.0f, -0.5f }  }
     };
 
-    unsigned int indices[] = {
+    std::vector<unsigned int> indices {
         0, 1, 2
     };
 
-    glGenVertexArrays(1, &VAO);
-
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+    mesh m{ vertices, indices, std::vector<texture>{0} };
     
-    program.use();
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+        m.draw(program);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
